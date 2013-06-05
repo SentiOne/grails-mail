@@ -15,6 +15,8 @@
  */
 package grails.plugin.mail
 
+import org.springframework.mail.javamail.JavaMailSenderImpl
+
 import javax.mail.Message
 import javax.mail.internet.MimeUtility
 
@@ -41,7 +43,7 @@ class MailMessageBuilder {
 
     private Logger log = LoggerFactory.getLogger(getClass())
 
-    final MailSender mailSender
+    final JavaMailSenderImpl mailSender
     final MailMessageContentRenderer mailMessageContentRenderer
 
     final String defaultFrom
@@ -211,6 +213,32 @@ class MailMessageBuilder {
 
         text(body)
     }
+
+	void host(CharSequence host) {
+		Assert.notNull(host, "host cannot be null")
+		mailSender.host = host
+	}
+
+	void port(Integer port){
+		Assert.notNull(port, "port cannot be null")
+		mailSender.port = port
+	}
+
+	void username(CharSequence username){
+		Assert.notNull(username, "username cannot be null")
+		mailSender.username = username
+	}
+
+
+	void password(CharSequence password){
+		Assert.notNull(password, "password cannot be null")
+		mailSender.password = password
+	}
+
+	void properties(Properties properties){
+		Assert.notNull(properties, "properties cannot be null")
+		mailSender.javaMailProperties = properties
+	}
 
     void body(Map params) {
         Assert.notEmpty(params, "body cannot be null or empty")
